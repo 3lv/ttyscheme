@@ -7,15 +7,15 @@ function f(fg, bg, isguicolor)
 end
 
 local groups = {
-	Normal = f("White", "None")
-	Comment = f("DarkGrey", "None")
-	Visual = f(nil, "DarkBlue")
-	FFirst = f(nil, "Green")
-	FSecond = f("DarkGreen", "Green")
-	ErrorMsg = f("Red", nil)
+	Normal = f("White", "None"),
+	Comment = f("DarkGrey", "None"),
+	Visual = f(nil, "DarkBlue"),
+	FFirst = f(nil, "Green"),
+	FSecond = f("DarkGreen", "Green"),
+	ErrorMsg = f("Red", nil),
 	--ErrorMsg                    = { fg = f.errorred },
 	--MoreMsg                     = { fg = f.fairygreen },
-	Function = f("DarkCyan", nil)
+	Function = f("DarkCyan", nil),
 	--Statement                   = { fg = f.strongpink, bold = true},
 	--Type                        = { fg = f.purplelight },
 	--Keyword                     = { fg = f.purpledark },
@@ -25,8 +25,8 @@ local groups = {
 	--StatusLine                  = { bold = true },
 	--StatusLineNC                = { },
 	--Search                      = f.search,
-	Search = f(nil, "DarkYellow")
-	IncSearch = f(nil, "DarkCyan")
+	Search = f(nil, "DarkYellow"),
+	IncSearch = f(nil, "DarkCyan"),
 	--LineNr                      = { fg = f.gothpink },
 	--CursorLineNr                = { fg = f.goldcontrast, bold = true },
 	--SignColumn                  = { bg = f.none },
