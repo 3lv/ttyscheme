@@ -43,7 +43,7 @@ function f.colorscheme()
 	end
 	vim.o.background = 'dark'
 	vim.o.termguicolors = true
-	vim.g.colors_name = 'tty'
+	vim.g.colors_name = 'ttyscheme'
 	for group, settings in pairs(groups) do
 		vim.api.nvim_set_hl(0, group, settings)
 	end
