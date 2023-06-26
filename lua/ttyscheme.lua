@@ -1,6 +1,6 @@
-local f = {
-}
-function f(fg, bg, isguicolor)
+local M = { }
+
+local function f(fg, bg, isguicolor)
 	if isguicolor == nil then
 		return { ctermfg = fg, ctermbg = bg }
 	end
@@ -37,7 +37,7 @@ local groups = {
 	--LspDiagnosticsDefaultInforma= { fg = '#51afef' },
 }
 
-function f.colorscheme()
+function M.colorscheme()
 	if vim.fn.exists('syntax_on') then
 		vim.api.nvim_command('syntax reset')
 	end
@@ -48,6 +48,6 @@ function f.colorscheme()
 		vim.api.nvim_set_hl(0, group, settings)
 	end
 end
-f.colorscheme()
+M.colorscheme()
 
-return f
+return M
