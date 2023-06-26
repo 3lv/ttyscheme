@@ -1,7 +1,7 @@
 local f = {
 }
 function f(fg, bg, isguicolor)
-	if !isguicolor then
+	if isguicolor == nil then
 		return { ctermfg = fg, ctermbg = bg }
 	end
 end
