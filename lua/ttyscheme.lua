@@ -1,53 +1,63 @@
 local M = { }
 
-local function f(fg, bg, isguicolor)
-	if isguicolor == nil then
-		return { ctermfg = fg, ctermbg = bg }
+local function f(fg, bg)
+	fg = fg or "None"
+	bg = bg or "None"
+	return { ctermfg = fg, ctermbg = bg }
+end
+
+--[[
+-- 0 = black
+-- 1 = red
+-- 2 green
+-- 3 = yellow
+-- 4 = blue
+-- 5 magenta
+-- 6 cyan
+-- 7 whtie
+-- +8 for light variants
+--]]
+M.groups = {
+	-- Cursor highlighting not working in tty
+	Comment = f(8),
+	Visual = f(nil, 4),
+	Directory = f(12);
+	IncSearch = f(nil, 6);
+	-- Underline is interpreted as light in tty
+	-- highlight background instead
+	DiagnostisUnderlineWarn = f(nil, 3);
+	DiagnostisUnderlineInfo = f(nil, 7);
+	DiagnostisUnderlineHint = f(nil, 6);
+	DiagnostisUnderlineError = f(nil, 1);
+}
+
+-- Make all groups have dark ctermbg (background)
+-- this way colorscheme looks the same on both
+-- vconsole and normal terminal emulators
+function M:dark_ctermbg()
+	for group in pairs(vim.api.nvim_get_hl(0, {})) do
+		local settings = vim.api.nvim_get_hl(0, {name = group})
+		if settings.ctermbg ~= nil and settings.ctermbg >= 8 and settings.ctermbg <= 15 then
+			settings.ctermbg = settings.ctermbg - 8
+			vim.api.nvim_set_hl(0, group, settings)
+		end
 	end
 end
 
-local groups = {
-	Normal = f("White", "None"),
-	Comment = f("DarkGrey", "None"),
-	Visual = f(nil, "DarkBlue"),
-	FFirst = f(nil, "Green"),
-	FSecond = f("DarkGreen", "Green"),
-	ErrorMsg = f("Red", nil),
-	--ErrorMsg                    = { fg = f.errorred },
-	--MoreMsg                     = { fg = f.fairygreen },
-	Function = f("DarkCyan", nil),
-	--Statement                   = { fg = f.strongpink, bold = true},
-	--Type                        = { fg = f.purplelight },
-	--Keyword                     = { fg = f.purpledark },
-	--Delimiter                   = { fg = f.purple },
-	--Operator                    = { fg = f.normalplus },
-	--VertSplit                   = { bg = f.none },
-	--StatusLine                  = { bold = true },
-	--StatusLineNC                = { },
-	--Search                      = f.search,
-	Search = f(nil, "DarkYellow"),
-	IncSearch = f(nil, "DarkCyan"),
-	--LineNr                      = { fg = f.gothpink },
-	--CursorLineNr                = { fg = f.goldcontrast, bold = true },
-	--SignColumn                  = { bg = f.none },
-	--NormalFloat                 = { fg = f.normal, bg = f.none },
-	--LspDiagnosticsDefaultError  = { fg = '#ec5f67' },
-	--LspDiagnosticsDefaultWarning= { fg = '#fabd2f' },
-	--LspDiagnosticsDefaultHint   = { fg = '#51afef' },
-	--LspDiagnosticsDefaultInforma= { fg = '#51afef' },
-}
-
-function M.colorscheme()
+function M:colorscheme()
 	if vim.fn.exists('syntax_on') then
 		vim.api.nvim_command('syntax reset')
 	end
 	vim.o.background = 'dark'
-	vim.o.termguicolors = true
+	vim.o.termguicolors = false
 	vim.g.colors_name = 'ttyscheme'
-	for group, settings in pairs(groups) do
+	for group, settings in pairs(M.groups) do
 		vim.api.nvim_set_hl(0, group, settings)
 	end
+	if vim.fn.expand("$TERM") ~= "linux" then
+		M:dark_ctermbg();
+	end
 end
-M.colorscheme()
 
+M:colorscheme()
 return M
