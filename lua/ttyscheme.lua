@@ -70,8 +70,8 @@ function M:from256to16()
 		end
 		if settings.ctermbg ~= nil then
 			local newbg = self.map256to16bg[settings.ctermfg]
-			if settings.ctermfg > 15 and newbg ~= nil then
-				settings.ctermfg = newbg
+			if settings.ctermbg > 15 and newbg ~= nil then
+				settings.ctermbg = newbg
 			end
 		end
 	end
