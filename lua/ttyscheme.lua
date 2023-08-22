@@ -19,9 +19,10 @@ end
 --]]
 M.groups = {
 	-- Cursor highlighting not working in tty
+	Normal = f(7, 0),
 	Comment = f(8),
-	Visual = f(nil, 4),
 	Directory = f(12),
+	Visual = f(nil, 4),
 	IncSearch = f(nil, 6),
 	-- Underline is interpreted as light in tty
 	-- highlight background instead
@@ -69,7 +70,7 @@ function M:from256to16()
 			end
 		end
 		if settings.ctermbg ~= nil then
-			local newbg = self.map256to16bg[settings.ctermfg]
+			local newbg = self.map256to16bg[settings.ctermbg]
 			if settings.ctermbg > 15 and newbg ~= nil then
 				settings.ctermbg = newbg
 			end
