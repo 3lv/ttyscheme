@@ -34,15 +34,15 @@ M.groups = {
 	-- :lua for group in pairs(vim.api.nvim_get_hl(0, {})) do local settings = vim.api.nvim_get_hl(0, {name = group}) if (settings.ctermfg~=nil and settings.ctermfg>15) or (settings.ctermbg~=nill and settings.ctermbg>15) then vim.cmd(":highlight "..group) end end
 }
 M.map256to16fg = {
-	["81"] = 14,
-	["121"] = 10,
-	["224"] = 15,
-	["225"] = 15,
-	["242"] = 7,
+	[81] = 14,
+	[121] = 10,
+	[224] = 15,
+	[225] = 15,
+	[242] = 7,
 }
 -- actually 16
 M.map256to16bg = {
-	["242"] = 0,
+	[242] = 0,
 }
 
 -- Make all groups have dark ctermbg (background)
