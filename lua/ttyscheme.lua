@@ -49,8 +49,7 @@ M.map256to16bg = {
 -- this way colorscheme looks the same on both
 -- vconsole and normal terminal emulators
 function M:dark_ctermbg()
-	for group in pairs(vim.api.nvim_get_hl(0, {})) do
-		local settings = vim.api.nvim_get_hl(0, {name = group})
+	for group, settings in pairs(vim.api.nvim_get_hl(0, {})) do
 		if settings.ctermbg ~= nil and settings.ctermbg >= 8 and settings.ctermbg <= 15 then
 			settings.ctermbg = settings.ctermbg - 8
 			vim.api.nvim_set_hl(0, group, settings)
@@ -58,8 +57,7 @@ function M:dark_ctermbg()
 	end
 end
 function M:from256to16()
-	for group in pairs(vim.api.nvim_get_hl(0, {})) do
-		local settings = vim.api.nvim_get_hl(0, {name = group})
+	for group, settings in pairs(vim.api.nvim_get_hl(0, {})) do
 		if settings.ctermfg ~= nil then
 			local newfg = self.map256to16fg[settings.ctermfg]
 			if settings.ctermfg > 15 and newfg ~= nil then
@@ -72,6 +70,7 @@ function M:from256to16()
 				settings.ctermbg = newbg
 			end
 		end
+		vim.api.nvim_set_hl(0, group, settings)
 	end
 end
 
