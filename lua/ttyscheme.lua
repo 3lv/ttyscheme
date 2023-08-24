@@ -26,15 +26,12 @@ M.groups = {
 	IncSearch = f(nil, 6),
 	-- Underline is interpreted as light in tty
 	-- highlight background instead
-	DiagnostisUnderlineWarn = f(nil, 3),
-	DiagnostisUnderlineInfo = f(nil, 7),
-	DiagnostisUnderlineHint = f(nil, 6),
-	DiagnostisUnderlineError = f(nil, 1),
+	DiagnosticUnderlineWarn = f(nil, 3),
+	DiagnosticUnderlineInfo = f(nil, 7),
+	DiagnosticUnderlineHint = f(nil, 6),
+	DiagnosticUnderlineError = f(nil, 1),
 	-- Overwrite groups that use 256colors instead of 16
-	-- lua for group in pairs(vim.api.nvim_get_hl(0, {})) do local settings = vim.api.nvim_get_hl(0, {name = group}) if (settings.ctermfg~=nil and settings.ctermfg>15) or (settings.ctermbg~=nill and settings.ctermbg>15) then vim.cmd(":highlight "..group) end end
-	Type = f(10),
-	MoreMsg = f(10),
-	Question = f(10),
+	-- :lua for group in pairs(vim.api.nvim_get_hl(0, {})) do local settings = vim.api.nvim_get_hl(0, {name = group}) if (settings.ctermfg~=nil and settings.ctermfg>15) or (settings.ctermbg~=nill and settings.ctermbg>15) then vim.cmd(":highlight "..group) end end
 }
 M.map256to16fg = {
 	["81"] = 14,
@@ -88,9 +85,9 @@ function M:colorscheme()
 	for group, settings in pairs(M.groups) do
 		vim.api.nvim_set_hl(0, group, settings)
 	end
-	if vim.fn.expand("$TERM") ~= "linux" then
+	if true or vim.fn.expand("$TERM") ~= "linux" then
 		M:dark_ctermbg()
-		M:form256to16()
+		M:from256to16()
 	end
 end
 
