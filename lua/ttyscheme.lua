@@ -24,6 +24,7 @@ M.groups = {
 	Directory = f(12),
 	Visual = f(nil, 4),
 	IncSearch = f(nil, 6),
+	StatusLine = f(8, 7),
 	-- Underline is interpreted as light in tty
 	-- highlight background instead
 	DiagnosticUnderlineWarn = f(nil, 3),
@@ -40,22 +41,21 @@ M.map256to16fg = {
 	[225] = 15,
 	[242] = 7,
 }
--- actually 16
-M.map256to16bg = {
+M.map256to8bg = {
+	-- Make all groups have dark ctermbg (background)
+	-- this way colorscheme looks the same on both
+	-- vconsole and normal terminal emulators
+	[8] = 0,
+	[9] = 1,
+	[10] = 2,
+	[11] = 3,
+	[12] = 4,
+	[13] = 5,
+	[14] = 6,
+	[15] = 7,
 	[242] = 0,
 }
 
--- Make all groups have dark ctermbg (background)
--- this way colorscheme looks the same on both
--- vconsole and normal terminal emulators
-function M:dark_ctermbg()
-	for group, settings in pairs(vim.api.nvim_get_hl(0, {})) do
-		if settings.ctermbg ~= nil and settings.ctermbg >= 8 and settings.ctermbg <= 15 then
-			settings.ctermbg = settings.ctermbg - 8
-			vim.api.nvim_set_hl(0, group, settings)
-		end
-	end
-end
 function M:from256to16()
 	for group, settings in pairs(vim.api.nvim_get_hl(0, {})) do
 		if settings.ctermfg ~= nil then
@@ -65,7 +65,7 @@ function M:from256to16()
 			end
 		end
 		if settings.ctermbg ~= nil then
-			local newbg = self.map256to16bg[settings.ctermbg]
+			local newbg = self.map256to8bg[settings.ctermbg]
 			if settings.ctermbg > 15 and newbg ~= nil then
 				settings.ctermbg = newbg
 			end
@@ -85,7 +85,6 @@ function M:colorscheme()
 		vim.api.nvim_set_hl(0, group, settings)
 	end
 	if true or vim.fn.expand("$TERM") ~= "linux" then
-		M:dark_ctermbg()
 		M:from256to16()
 	end
 end
