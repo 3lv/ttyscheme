@@ -1,1 +1,2 @@
 require('ttyscheme')
+print("test")
