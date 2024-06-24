@@ -1,2 +1,1 @@
-require('ttyscheme')
-print("test")
+require('ttyscheme'):colorscheme()

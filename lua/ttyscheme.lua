@@ -75,6 +75,7 @@ function M:from256to16()
 end
 
 function M:colorscheme()
+	print("TEST");
 	if vim.fn.exists('syntax_on') then
 		vim.api.nvim_command('syntax reset')
 	end
@@ -90,5 +91,4 @@ function M:colorscheme()
 	end
 end
 
-M:colorscheme()
 return M
