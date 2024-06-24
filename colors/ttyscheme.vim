@@ -1,1 +1,0 @@
-lua require('ttyscheme'):colorscheme()
