@@ -78,7 +78,7 @@ function M:colorscheme()
 	if vim.fn.exists('syntax_on') then
 		vim.api.nvim_command('syntax reset')
 	end
-	vim.cmd[[colorscheme vim]]
+	vim.api.nvim_command('colorscheme vim')
 	vim.o.background = 'dark'
 	vim.o.termguicolors = false
 	vim.g.colors_name = 'ttyscheme'
